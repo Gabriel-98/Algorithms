@@ -181,7 +181,7 @@ int Trie::size(){
 }
 
 int main(){
-//	ios_base::sync_with_stdio(0);cin.tSie(NULL);
+	ios_base::sync_with_stdio(0);cin.tie(NULL);
 	Trie trie = Trie();
 	trie.insert("bear");
 	trie.insert("bell");

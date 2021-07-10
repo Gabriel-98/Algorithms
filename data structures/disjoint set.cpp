@@ -71,6 +71,9 @@ int main() {
 	dsu.merge(dsu.find(7),dsu.find(8));
 	dsu.merge(dsu.find(5),dsu.find(8));
 	dsu.merge(dsu.find(7),dsu.find(5));
+	dsu.merge(dsu.find(9),dsu.find(11));
+	dsu.merge(dsu.find(9),dsu.find(12));
+	dsu.merge(dsu.find(12),dsu.find(7));
 	cout<<dsu.find(5)<<" "<<dsu.find(7)<<" "<<dsu.find(8)<<endl;
 	cout<<dsu.numberOfSets()<<endl;
 }

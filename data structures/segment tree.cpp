@@ -4,14 +4,12 @@ using namespace std;
 
 struct SegmentTreeNode{
 
-	int null, l, r, valor;
+	int null, valor;
 
 	SegmentTreeNode(){ null = 1; }
 
 	SegmentTreeNode(const SegmentTreeNode& s){
 		null = s.null;
-		l = s.l;
-		r = s.r;
 		valor = s.valor;
 	}
 
@@ -45,7 +43,7 @@ struct SegmentTree{
 		}
 		n = 4 * V.size();
 		T.clear();
-		T.resize(n,0);
+		T.resize(n, SegmentTreeNode());
 		build2(1,0,vect.size()-1);
 	}
 
@@ -93,7 +91,7 @@ struct SegmentTree{
 };
 
 int main() {
-	ios_base::sync_with_stdio(false); cin.tie(0);
+	ios_base::sync_with_stdio(false);cin.tie(0);
 	int n,m,x,op,pos,valor,l,r,i;
 	cin>>n>>m;
 	vector<SegmentTreeNode> V(n);

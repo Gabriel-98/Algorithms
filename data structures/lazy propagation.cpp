@@ -137,25 +137,22 @@ struct SegmentTreeLP{
 
 
 vector<long long> V;
-struct SegmentTreeLP st;
+SegmentTreeLP st;
 
 int main(){
 	ios_base::sync_with_stdio(0);cin.tie(NULL);
 	long long t,n,q,op,x,y,k,i;
-	cin>>t;
-	while(t--){
-		cin>>n>>q;
-		V.clear();
-		V.resize(n+1,0);
-		st.build(V);
-		while(q--){
-			cin>>op>>x>>y;
-			if(op == 0){
-				cin>>k;
-				st.update(x,y,k);
-			}
-			else
-			cout<<st.query(x,y)<<endl;
+	cin>>n>>q;
+	V.clear();
+	V.resize(n+1,0);
+	st.build(V);
+	while(q--){
+		cin>>op>>x>>y;
+		if(op == 0){
+			cin>>k;
+			st.update(x,y,k);
 		}
+		else
+		cout<<st.query(x,y)<<endl;
 	}
 }
