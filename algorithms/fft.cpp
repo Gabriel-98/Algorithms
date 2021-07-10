@@ -4,7 +4,7 @@ using namespace std;
 typedef complex<double> complejo;
 const double pi = 3.14159265358979;
 
-vector<complejo> fft(vector<complejo> a, bool inverse=false){
+vector<complejo> fft(vector<complejo> &a, bool inverse=false){
 	int n = a.size();
 	if(n == 1)
 	return a;
@@ -39,10 +39,9 @@ vector<complejo> fft(vector<complejo> a, bool inverse=false){
 	return y;
 }
 
-vector<complejo> A, B, C, C1, C2, Z;
-vector<long long> V1, V2, V3;
+void convolution(vector<long long> V1, vector<long long> V2, vector<long long> &V3){
+	vector<complejo> A, B, C, C1, C2, Z;
 
-vector<long long> convolution(vector<long long> V1, vector<long long> V2){
 	int n,pot;
 	n = 2 * max(V1.size(), V2.size());
 	pot = pow(2, int(log2(n)));
@@ -63,38 +62,39 @@ vector<long long> convolution(vector<long long> V1, vector<long long> V2){
 		double x = round(real(Z[i]));
 		V3.push_back(x);
 	}
-	return V3;
 }
-
-vector<long long> ans;
 
 int main(){
 	ios_base::sync_with_stdio(0);cin.tie(NULL);
-	int n,x,y,i;
-	cin>>n>>x;
-	V1.push_back(1);
-	for(i=0; i<n; i++){
-		cin>>y;
-		if(y < x)
-		V1.push_back(1);
-		else
-		V1[V1.size()-1]++;
-	}
-	for(i=0; i<V1.size(); i++){ V2.push_back(V1[i]); }
-	V2[V2.size()-1] = V1[V1.size()-1]-1;
-	convolution(V1, V2);
-	for(i=V1.size()-1; i<(2*V1.size()) && ans.size() <= n; i++){ ans.push_back(V3[i]); }
-	for(i=ans.size(); i<=n; i++){ ans.push_back(0); }
+	int n1,n2;
+	vector<int> alp = {'A', 'C', 'T', 'G'};
+	string cad1, cad2;
+	cin>>cad1>>cad2;
+	n1 = cad1.size();
+	n2 = cad2.size();
 
-	for(i=0; i<V2.size(); i++){
-		ans[0] -= V2[i]*V2[i];
-		ans[0] += (V2[i]*(V2[i]-1))/2;
+	vector<int> acu(n1,0);
+	vector<long long> V1, V2, V3;
+	V1.resize(n1); V2.resize(n2);
+	for(int l=0; l<alp.size(); l++){
+		for(int i=0; i<n1; i++){
+			if(cad1[i] == alp[l]) V1[i] = 1;
+			else V1[i] = 0;
+		} 
+		for(int i=0; i<n2; i++){
+			if(cad2[i] == alp[l]) V2[i] = 1;
+			else V2[i] = 0;
+		}
+		convolution(V1, V2, V3);
+
+		for(int i=n2-1; i<=n1-1; i++)
+		acu[i] += V3[i];
 	}
 
-	for(i=0; i<ans.size(); i++){
-		if(i > 0)
-		cout<<" ";
-		cout<<ans[i];
-	}
-	cout<<endl;
+	int mayor = 0;
+	for(int i=n2-1; i<n1; i++)
+	mayor = max(mayor, acu[i]);
+
+	int ans = n2 - mayor;
+	cout<<ans<<endl;
 }
